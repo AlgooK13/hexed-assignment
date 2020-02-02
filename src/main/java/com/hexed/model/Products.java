@@ -42,7 +42,7 @@ public class Products {
 	public void setPrice(float price) {
 		this.price = price;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Products [code=" + code + ", quantity=" + quantity + ", price=" + price + "]";

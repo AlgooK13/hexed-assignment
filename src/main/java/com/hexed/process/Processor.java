@@ -1,10 +1,13 @@
 package com.hexed.process;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import com.hexed.common.ProductStore;
+import com.hexed.common.Utility;
 import com.hexed.model.OrderReceipt;
 import com.hexed.model.Products;
 
@@ -19,15 +22,39 @@ public class Processor {
 			Products productData = null;
 			List<String> lstPacks = new ArrayList<String>();
 			List<Products> lstProduct = ProductStore.getAvailblePacks(products.getCode());
-			int[] packs = { 3, 5 };
+			Map<String, List<Integer>> sortedProductData = Utility.getSortedPackList(lstProduct);
+			List<Integer> packs = sortedProductData.get(products.getCode());
 			int totleCount = products.getQuantity();
 			float totalAmount = 0f;
-			for (int i = packs.length - 1; i >= 0; i--) {
+			for (int i = packs.size() - 1; i >= 0; i--) {
 
-				while (totleCount >= packs[i]) {
+				while (totleCount >= packs.get(i)) {
 					productData = lstProduct.get(i);
-					if (totleCount >= packs[i]) {
-						totleCount = totleCount - packs[i];
+
+					if (totleCount % packs.size() == 0) {
+						int rPacks = totleCount / packs.size();
+						if (packs.contains(rPacks)) {
+							totleCount = packs.size();
+							float price = 0f;
+							for (int j = 0; j < packs.size(); j++) {
+								lstPacks.add(String.valueOf(rPacks));
+								productData = lstProduct.get(j);
+								if (productData.getQuantity() == rPacks) {
+									price = productData.getPrice();
+								}
+								totalAmount = price * packs.size();
+							}
+							totleCount = totleCount - packs.size();
+						}
+
+						if (totleCount >= packs.get(i)) {
+							totleCount = totleCount - packs.get(i);
+							totalAmount = totalAmount + (productData.getPrice());
+							lstPacks.add(String.valueOf(productData.getQuantity()));
+						}
+					}
+					if (totleCount >= packs.get(i)) {
+						totleCount = totleCount - packs.get(i);
 						totalAmount = totalAmount + (productData.getPrice());
 						lstPacks.add(String.valueOf(productData.getQuantity()));
 					}
@@ -45,5 +72,6 @@ public class Processor {
 		return ordReceipt;
 
 	}
-
 }
+
+	

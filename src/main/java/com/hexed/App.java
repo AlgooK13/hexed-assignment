@@ -18,7 +18,7 @@ public class App
     public static void main( String[] args )
     {
     	logger.info("Welcome to Bakery Shop");
-    	Products products =  new Products("VS5", 13);
+    	Products products =  new Products("VS5", 11);
      	OrderReceipt ordReceipt = Processor.calPriceBreakdownCount(products);
      	logger.info(ordReceipt.toString());
     	
