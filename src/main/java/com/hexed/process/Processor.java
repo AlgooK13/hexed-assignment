@@ -23,10 +23,9 @@ public class Processor {
 			int[] packs = { 3, 5 };
 			int totleCount = products.getQuantity();
 			float totalAmount = 0f;
-			for (int i = packs.length-1; i >=0; i--) {
-				
-				while (totleCount >= packs[i] ) {
-					System.out.println("1");
+			for (int i = packs.length - 1; i >= 0; i--) {
+
+				while (totleCount >= packs[i]) {
 					productData = lstProduct.get(i);
 					if (totleCount >= packs[i]) {
 						totleCount = totleCount - packs[i];
@@ -35,15 +34,15 @@ public class Processor {
 					}
 				}
 			}
-			if (productData!=null)
+			if (productData != null)
 				ordReceipt.setCode(productData.getCode());
 			ordReceipt.setTotalAmount(totalAmount);
 			ordReceipt.setPacks(lstPacks);
 			if (totleCount > 0) {
 				logger.info("Invald Product " + products.getCode() + " Count " + products.getQuantity() + " Products");
+				ordReceipt = null;
 			}
 		}
-		logger.info("Invald Product" + ordReceipt.toString());
 		return ordReceipt;
 
 	}
