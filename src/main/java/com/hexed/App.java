@@ -20,7 +20,7 @@ public class App
     	logger.info("Welcome to Bakery Shop");
     	Products products =  new Products("VS5", 13);
      	OrderReceipt ordReceipt = Processor.calPriceBreakdownCount(products);
-     	ordReceipt.toString();
+     	logger.info(ordReceipt.toString());
     	
     }
 }

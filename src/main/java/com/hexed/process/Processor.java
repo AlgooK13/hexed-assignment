@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.hexed.common.ProductStore;
 import com.hexed.model.OrderReceipt;
 import com.hexed.model.Products;
 
@@ -17,9 +18,7 @@ public class Processor {
 			ordReceipt = new OrderReceipt();
 			Products productData = null;
 			List<String> lstPacks = new ArrayList<String>();
-			List<Products> lstProduct = new ArrayList<Products>();
-			lstProduct.add(new Products("VS5", 3, 6.99f));
-			lstProduct.add(new Products("VS5", 5, 8.99f));
+			List<Products> lstProduct = ProductStore.getAvailblePacks(products.getCode());
 			int[] packs = { 3, 5 };
 			int totleCount = products.getQuantity();
 			float totalAmount = 0f;
