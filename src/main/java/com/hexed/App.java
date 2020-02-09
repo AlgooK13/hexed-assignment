@@ -1,5 +1,6 @@
 package com.hexed;
 
+import java.util.Map;
 import java.util.logging.Logger;
 
 import com.hexed.model.OrderReceipt;
@@ -18,8 +19,9 @@ public class App
     public static void main( String[] args )
     {
     	logger.info("Welcome to Bakery Shop");
-    	Products products =  new Products("VS5", 11);
-     	OrderReceipt ordReceipt = Processor.calPriceBreakdownCount(products);
+    	Products products =  new Products("MB11", 17);
+    	Map<Integer, Integer> orderData = Processor.calPriceBreakdownCount(products);
+    	OrderReceipt ordReceipt = Processor.genrateOrderBill(products,orderData);
      	logger.info(ordReceipt.toString());
     	
     }

@@ -15,7 +15,52 @@ public class Processor {
 
 	private static final Logger logger = Logger.getLogger(Processor.class.getName());
 
-	public static OrderReceipt calPriceBreakdownCount(Products products) {
+	public static Map<Integer, Integer> calPriceBreakdownCount(Products products) {
+		Map<Integer, Integer> mapPacks = null;
+		if (products != null) {
+			mapPacks = new HashMap<Integer, Integer>();
+			List<Products> lstProduct = ProductStore.getAvailblePacks(products.getCode());
+			Map<String, List<Integer>> sortedProductData = Utility.getSortedPackList(lstProduct);
+			List<Integer> packs = sortedProductData.get(products.getCode());
+			int totalCount = products.getQuantity();
+			int modulus = 0;
+			int packValue = 0;
+			int size = packs.size();
+			while (totalCount > 0 && size > 0) {
+				if (packValue > 0) {
+					int packIndex = packs.indexOf(packValue);
+					if (packIndex == 0) {
+						packValue = packs.get(size - 1);
+					}
+					if (mapPacks.containsKey(packValue)) {
+						size = size - 1;
+						if (mapPacks.get(packValue) > 1) {
+							mapPacks.put(packValue, mapPacks.get(packValue) - 1);
+						} else
+							mapPacks.remove(packValue);
+					}
+
+					totalCount = totalCount + packValue;
+				}
+
+				for (int i = size - 1; i >= 0; i--) {
+					modulus = totalCount / packs.get(i);
+					if (modulus > 0) {
+						packValue = packs.get(i);
+						mapPacks.put(packValue, modulus);
+						totalCount = totalCount % packValue;
+					}
+				}
+			}
+			if (totalCount > 0) {
+				logger.info("Invalid Count Provided");
+			}
+		}
+		return mapPacks;
+
+	}
+
+	public static OrderReceipt calPriceBreakdownCountbkp(Products products) {
 		OrderReceipt ordReceipt = null;
 		if (products != null) {
 			ordReceipt = new OrderReceipt();
@@ -72,6 +117,31 @@ public class Processor {
 		return ordReceipt;
 
 	}
-}
 
-	
+	public static OrderReceipt genrateOrderBill(Products products, Map<Integer, Integer> orderCount) {
+		OrderReceipt orderReceipt = null;
+		try {
+			if (orderCount != null && products != null) {
+				float totalAmount = 0.f;
+				orderReceipt = new OrderReceipt();
+				List<Products> lstProduct = ProductStore.getAvailblePacks(products.getCode());
+				Map<Integer, Float> packPrice = Utility.getPackPrice(lstProduct);
+				List<String> packs=new ArrayList<String>();
+				for (Map.Entry<Integer, Integer> ordData : orderCount.entrySet()) {
+					float price=packPrice.get(ordData.getKey());
+					totalAmount=totalAmount+(price*ordData.getValue());
+					packs.add(ordData.getValue()+" X "+ordData.getKey()+" $"+price);
+				}
+				orderReceipt.setCode(products.getQuantity()+" "+products.getCode());
+				orderReceipt.setTotalAmount(totalAmount);
+				orderReceipt.setPacks(packs);
+
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return orderReceipt;
+
+	}
+}

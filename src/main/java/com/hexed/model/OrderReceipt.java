@@ -7,11 +7,7 @@ public class OrderReceipt {
 	private float totalAmount;
 	private List<String> packs; 
 
-	/*
-	 * public OrderReceipt(String code, float totalAmount, List<String> packs) {
-	 * super(); this.code = code; this.totalAmount = totalAmount; this.packs =
-	 * packs; }
-	 */
+	
 	public String getCode() {
 		return code;
 	}
@@ -38,7 +34,7 @@ public class OrderReceipt {
 
 	@Override
 	public String toString() {
-		return "OrderReceipt [code=" + code + ", totalAmount=" + totalAmount + ", packs=" + packs + "]";
+		return  code + " " + totalAmount +" " +packs;
 	}
 
 }
