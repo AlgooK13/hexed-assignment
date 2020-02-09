@@ -34,7 +34,7 @@ public class OrderReceipt {
 
 	@Override
 	public String toString() {
-		return  code + " " + totalAmount +" " +packs;
+		return  code + " $" + totalAmount +" " +packs;
 	}
 
 }

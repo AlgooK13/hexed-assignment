@@ -1,11 +1,8 @@
 package com.hexed;
 
-import java.util.Map;
 import java.util.logging.Logger;
 
-import com.hexed.model.OrderReceipt;
-import com.hexed.model.Products;
-import com.hexed.process.Processor;
+import com.hexed.process.HexedBakeryShop;
 
 
 /**
@@ -18,11 +15,11 @@ public class App
 	
     public static void main( String[] args )
     {
+    	
     	logger.info("Welcome to Bakery Shop");
-    	Products products =  new Products("MB11", 17);
-    	Map<Integer, Integer> orderData = Processor.calPriceBreakdownCount(products);
-    	OrderReceipt ordReceipt = Processor.genrateOrderBill(products,orderData);
-     	logger.info(ordReceipt.toString());
+    	logger.info("Please enter the order ProductCode Count ex VS5 10. \n To Exit type 0 or Exit or exit.");
+    	HexedBakeryShop shop = new HexedBakeryShop();
+    	shop.start();
     	
     }
 }

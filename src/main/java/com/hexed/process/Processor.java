@@ -47,13 +47,18 @@ public class Processor {
 					modulus = totalCount / packs.get(i);
 					if (modulus > 0) {
 						packValue = packs.get(i);
-						mapPacks.put(packValue, modulus);
+
+						if (mapPacks.containsKey(packValue)) {
+							mapPacks.put(packValue, mapPacks.get(packValue) + modulus);
+						} else
+							mapPacks.put(packValue, modulus);
 						totalCount = totalCount % packValue;
 					}
 				}
 			}
 			if (totalCount > 0) {
 				logger.info("Invalid Count Provided");
+				mapPacks = null;
 			}
 		}
 		return mapPacks;
@@ -126,13 +131,13 @@ public class Processor {
 				orderReceipt = new OrderReceipt();
 				List<Products> lstProduct = ProductStore.getAvailblePacks(products.getCode());
 				Map<Integer, Float> packPrice = Utility.getPackPrice(lstProduct);
-				List<String> packs=new ArrayList<String>();
+				List<String> packs = new ArrayList<String>();
 				for (Map.Entry<Integer, Integer> ordData : orderCount.entrySet()) {
-					float price=packPrice.get(ordData.getKey());
-					totalAmount=totalAmount+(price*ordData.getValue());
-					packs.add(ordData.getValue()+" X "+ordData.getKey()+" $"+price);
+					float price = packPrice.get(ordData.getKey());
+					totalAmount = totalAmount + (price * ordData.getValue());
+					packs.add(ordData.getValue() + " X " + ordData.getKey() + " $" + price);
 				}
-				orderReceipt.setCode(products.getQuantity()+" "+products.getCode());
+				orderReceipt.setCode(products.getQuantity() + " " + products.getCode());
 				orderReceipt.setTotalAmount(totalAmount);
 				orderReceipt.setPacks(packs);
 
