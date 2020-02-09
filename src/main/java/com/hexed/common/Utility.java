@@ -26,10 +26,16 @@ public class Utility {
 	}
 
 	public static Map<Integer, Float> getPackPrice(List<Products> lstProducts) {
-		Map<Integer, Float> mapPack = new HashMap<Integer, Float>();
+		Map<Integer, Float> mapPack = null;
 		if (lstProducts != null && lstProducts.size() > 0) {
-			for (Products product : lstProducts) {
-				mapPack.put(product.getQuantity(), product.getPrice());
+			if (lstProducts != null && lstProducts.size() > 0) {
+
+				mapPack = new HashMap<Integer, Float>();
+
+				for (Products product : lstProducts) {
+
+					mapPack.put(product.getQuantity(), product.getPrice());
+				}
 			}
 		}
 		return mapPack;
