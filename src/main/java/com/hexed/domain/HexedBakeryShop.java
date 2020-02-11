@@ -1,11 +1,11 @@
-package com.hexed.process;
+package com.hexed.domain;
 
 import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
 import com.hexed.model.OrderReceipt;
-import com.hexed.model.Products;
+import com.hexed.model.Product;
 
 public class HexedBakeryShop {
 
@@ -17,9 +17,9 @@ public class HexedBakeryShop {
 		if (!(order.equalsIgnoreCase("0") || order.equalsIgnoreCase("exit"))) {
 			String[] orderInput = order.split(" ");
 			if (orderInput.length > 1) {
-				Products products = new Products(orderInput[0], Integer.parseInt(orderInput[1]));
-				Map<Integer, Integer> orderData = Processor.calPriceBreakdownCount(products);
-				OrderReceipt ordReceipt = Processor.genrateOrderBill(products, orderData);
+				Product product = new Product(orderInput[0], Integer.parseInt(orderInput[1]));
+				Map<Integer, Integer> orderData = OrderProcessor.calculateOrder(product);
+				OrderReceipt ordReceipt = OrderProcessor.genrateOrderBill(product, orderData);
 				logger.info(ordReceipt.toString());
 				logger.info("-------------------Order Completed--------------------------");
 			} else {

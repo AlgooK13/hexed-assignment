@@ -6,18 +6,19 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import com.hexed.model.Products;
+import com.hexed.domain.ProductSetup;
+import com.hexed.model.Product;
 
 import junit.framework.Assert;
 
-public class UtilityTest {
+public class ProductSetupTest {
 
 	@Test
 	public void getPackPriceTest() {
-		Products prd = new Products(null, 0);
-		List<Products> lstProducts = new ArrayList<Products>();
+		Product prd = new Product(null, 0);
+		List<Product> lstProducts = new ArrayList<Product>();
 		lstProducts.add(prd);
-		Map<Integer, Float> mapPackPrice = Utility.getPackPrice(lstProducts);
+		Map<Integer, Float> mapPackPrice = ProductSetup.getPackPrice(lstProducts);
 		Assert.assertTrue(mapPackPrice != null);
 
 	}

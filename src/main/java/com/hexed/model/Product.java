@@ -1,19 +1,19 @@
 package com.hexed.model;
 
-public class Products {
+public class Product {
 
 	private String code;
 	private int quantity;
 	private float price;
 
-	public Products(String code, int quantity, float price) {
+	public Product(String code, int quantity, float price) {
 		super();
 		this.code = code;
 		this.quantity = quantity;
 		this.price = price;
 	}
 
-	public Products(String code, int quantity) {
+	public Product(String code, int quantity) {
 		super();
 		this.code = code;
 		this.quantity = quantity;
@@ -45,7 +45,7 @@ public class Products {
 	
 	@Override
 	public String toString() {
-		return "Products [code=" + code + ", quantity=" + quantity + ", price=" + price + "]";
+		return "Product [code=" + code + ", quantity=" + quantity + ", price=" + price + "]";
 	}
 
 }

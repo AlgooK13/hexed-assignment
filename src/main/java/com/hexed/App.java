@@ -2,7 +2,7 @@ package com.hexed;
 
 import java.util.logging.Logger;
 
-import com.hexed.process.HexedBakeryShop;
+import com.hexed.domain.HexedBakeryShop;
 
 
 /**
